@@ -1,18 +1,156 @@
-<div class="form-box">
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Planner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-    <input type="text" id="task" placeholder="Masukkan nama tugas">
+<div class="container">
 
-    <input type="number" id="duration" placeholder="Durasi (menit)">
+    <h1>📚 Study Planner</h1>
+    <p class="subtitle">Susun tugas harianmu dengan lebih teratur</p>
 
-    <input type="time" id="startTime">
+    <div class="form-box">
 
-    <select id="priority">
-        <option value="4">🔥 Penting & Mendesak</option>
-        <option value="3">⭐ Penting</option>
-        <option value="2">⏰ Mendesak</option>
-        <option value="1">📝 Biasa</option>
-    </select>
+        <input type="text" id="task" placeholder="Nama Tugas">
 
-    <button onclick="addTask()">Tambah</button>
+        <input type="number" id="duration" placeholder="Durasi (menit)">
+
+        <input type="time" id="startTime">
+
+        <select id="priority">
+            <option value="4">🔥 Penting & Mendesak</option>
+            <option value="3">⭐ Penting</option>
+            <option value="2">⏰ Mendesak</option>
+            <option value="1">📝 Biasa</option>
+        </select>
+
+        <button onclick="addTask()">Tambah</button>
+
+    </div>
+
+    <h2>Daftar Tugas</h2>
+
+    <ul id="taskList"></ul>
+
+    <button class="schedule-btn" onclick="createSchedule()">
+        Buat Jadwal
+    </button>
+
+    <h2>Jadwal Hari Ini</h2>
+
+    <div id="schedule"></div>
 
 </div>
+
+<script>
+
+let tasks = [];
+
+function addTask(){
+
+    const task = document.getElementById("task").value;
+    const duration = document.getElementById("duration").value;
+    const startTime = document.getElementById("startTime").value;
+    const priority = document.getElementById("priority").value;
+
+    if(task === "" || duration === "" || startTime === ""){
+        alert("Lengkapi data terlebih dahulu!");
+        return;
+    }
+
+    tasks.push({
+        name: task,
+        duration: parseInt(duration),
+        startTime: startTime,
+        priority: parseInt(priority)
+    });
+
+    displayTasks();
+
+    document.getElementById("task").value = "";
+    document.getElementById("duration").value = "";
+    document.getElementById("startTime").value = "";
+}
+
+function displayTasks(){
+
+    const list = document.getElementById("taskList");
+    list.innerHTML = "";
+
+    tasks.forEach((task,index)=>{
+
+        list.innerHTML += `
+        <li>
+            <div>
+                <strong>${task.name}</strong><br>
+                ${task.duration} menit | ${task.startTime}
+            </div>
+
+            <button class="delete-btn"
+            onclick="deleteTask(${index})">
+            Hapus
+            </button>
+        </li>
+        `;
+    });
+}
+
+function deleteTask(index){
+
+    tasks.splice(index,1);
+    displayTasks();
+}
+
+function createSchedule(){
+
+    const sorted = [...tasks].sort((a,b)=>{
+
+        if(b.priority !== a.priority){
+            return b.priority - a.priority;
+        }
+
+        return a.startTime.localeCompare(b.startTime);
+    });
+
+    const schedule = document.getElementById("schedule");
+    schedule.innerHTML = "";
+
+    sorted.forEach(task=>{
+
+        let [hour,minute] = task.startTime.split(":");
+
+        let totalMinute =
+        (parseInt(hour) * 60) +
+        parseInt(minute) +
+        task.duration;
+
+        let endHour = Math.floor(totalMinute / 60);
+        let endMinute = totalMinute % 60;
+
+        schedule.innerHTML += `
+        <div class="card">
+
+            <h3>${task.name}</h3>
+
+            <p>
+            🕒 ${task.startTime}
+            -
+            ${String(endHour).padStart(2,"0")}:
+            ${String(endMinute).padStart(2,"0")}
+            </p>
+
+            <p>⏳ ${task.duration} menit</p>
+
+        </div>
+        `;
+    });
+}
+
+</script>
+
+</body>
+</html>
