@@ -1,57 +1,120 @@
-<!doctype html>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-<html>
-    <head>
-        <meta charset="utf-8">
+    <div class="container">
+        <h1>Smart To-Do List</h1>
 
-        <title>Blank template</title>
+        <div class="form-box">
+            <input type="text" id="task" placeholder="Nama Tugas">
 
-        <!-- Load external CSS styles -->
-        <link rel="stylesheet" href="styles.css">
+            <input type="number" id="duration" placeholder="Durasi (menit)">
 
-    </head>
+            <select id="priority">
+                <option value="4">Penting & Mendesak</option>
+                <option value="3">Penting & Tidak Mendesak</option>
+                <option value="2">Tidak Penting & Mendesak</option>
+                <option value="1">Tidak Penting & Tidak Mendesak</option>
+            </select>
 
-    <body>
-<header class="navbar">
-    <div class="brand">
-        <img src="logo1.png" alt="Logo">
-        <div class="title">
-            <h2>Magic Lamp Decision Helper</h2>
-            <p>Rub the Lamp, Find Your Movie</p>
+            <button onclick="addTask()">Tambah Tugas</button>
         </div>
+
+        <h2>Daftar Tugas</h2>
+        <ul id="taskList"></ul>
+
+        <button class="schedule-btn" onclick="createSchedule()">
+            Buat Jadwal
+        </button>
+
+        <h2>Jadwal Harian</h2>
+        <div id="schedule"></div>
     </div>
-</header>
-        <h1>Welcome To Our Page!</h1>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="design.html">Design</a></li>
-            <li><a href="produk.html">Produk</a></li>
-        </ul>
-        <marquee>Design by Kelompok 9</marquee>
-        <!-- Load external JavaScript -->
-        <script src="scripts.js"></script>
-        
-        <img src="logo1.png">
-        <p> Hai semuanya!
-        </p>
-        <p1> 
-            ini adalah domain kelompok 9 (ADAK4H) yang beranggotakan :
-        </p1>
-        <ul> 
-            <li>Deon Bintang Triarto </li>
-            <li>Fadli Naufal Arbi </li> 
-            <li>Gibran Rafaghani</li> 
-            <li>Dimas Aditya Sajid </li></ul>
 
-        <div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%;
- padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
- border-radius: 8px; will-change: transform;">
-  <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-    src="https://www.canva.com/design/DAHGU45buFo/VwjFA1t4EnI2PnwoD4nVog/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
-  </iframe>
-</div>
-<a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAHGU45buFo&#x2F;VwjFA1t4EnI2PnwoD4nVog&#x2F;view?utm_content=DAHGU45buFo&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">
+<script>
+let tasks = [];
 
-    </body>
+function addTask() {
+    const task = document.getElementById("task").value;
+    const duration = document.getElementById("duration").value;
+    const priority = document.getElementById("priority").value;
 
+    if(task === "" || duration === "") {
+        alert("Lengkapi data terlebih dahulu!");
+        return;
+    }
+
+    tasks.push({
+        name: task,
+        duration: parseInt(duration),
+        priority: parseInt(priority)
+    });
+
+    displayTasks();
+
+    document.getElementById("task").value = "";
+    document.getElementById("duration").value = "";
+}
+
+function displayTasks() {
+    let list = document.getElementById("taskList");
+    list.innerHTML = "";
+
+    tasks.forEach((t) => {
+        list.innerHTML += `
+            <li>${t.name} - ${t.duration} menit</li>
+        `;
+    });
+}
+
+function createSchedule() {
+    let sortedTasks = [...tasks].sort((a,b) => b.priority - a.priority);
+
+    let schedule = document.getElementById("schedule");
+    schedule.innerHTML = "";
+
+    let hour = 7;
+    let minute = 0;
+
+    sortedTasks.forEach((task) => {
+
+        let startHour = hour;
+        let startMinute = minute;
+
+        minute += task.duration;
+
+        while(minute >= 60){
+            hour++;
+            minute -= 60;
+        }
+
+        let endHour = hour;
+        let endMinute = minute;
+
+        schedule.innerHTML += `
+            <div class="card">
+                <strong>${task.name}</strong><br>
+                ${String(startHour).padStart(2,"0")}:${String(startMinute).padStart(2,"0")}
+                -
+                ${String(endHour).padStart(2,"0")}:${String(endMinute).padStart(2,"0")}
+            </div>
+        `;
+
+        minute += 10;
+
+        while(minute >= 60){
+            hour++;
+            minute -= 60;
+        }
+    });
+}
+</script>
+
+</body>
 </html>
