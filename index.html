@@ -3,49 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart To-Do List</title>
+    <title>Study Planner</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container">
-        <h1>Smart To-Do List</h1>
+<div class="container">
 
-        <div class="form-box">
-            <input type="text" id="task" placeholder="Nama Tugas">
+    <h1>📚 Study Planner</h1>
+    <p class="subtitle">Atur tugas harianmu dengan lebih rapi</p>
 
-            <input type="number" id="duration" placeholder="Durasi (menit)">
+    <div class="form-box">
+        <input type="text" id="task" placeholder="Masukkan nama tugas">
 
-            <select id="priority">
-                <option value="4">Penting & Mendesak</option>
-                <option value="3">Penting & Tidak Mendesak</option>
-                <option value="2">Tidak Penting & Mendesak</option>
-                <option value="1">Tidak Penting & Tidak Mendesak</option>
-            </select>
+        <input type="number" id="duration" placeholder="Durasi (menit)">
 
-            <button onclick="addTask()">Tambah Tugas</button>
-        </div>
+        <select id="priority">
+            <option value="4">🔥 Penting & Mendesak</option>
+            <option value="3">⭐ Penting</option>
+            <option value="2">⏰ Mendesak</option>
+            <option value="1">📝 Biasa</option>
+        </select>
 
+        <button onclick="addTask()">Tambah Tugas</button>
+    </div>
+
+    <div class="section">
         <h2>Daftar Tugas</h2>
         <ul id="taskList"></ul>
+    </div>
 
-        <button class="schedule-btn" onclick="createSchedule()">
-            Buat Jadwal
-        </button>
+    <button class="schedule-btn" onclick="createSchedule()">
+        Buat Jadwal Otomatis
+    </button>
 
-        <h2>Jadwal Harian</h2>
+    <div class="section">
+        <h2>Jadwal Hari Ini</h2>
         <div id="schedule"></div>
     </div>
 
+</div>
+
 <script>
+
 let tasks = [];
 
 function addTask() {
+
     const task = document.getElementById("task").value;
     const duration = document.getElementById("duration").value;
     const priority = document.getElementById("priority").value;
 
-    if(task === "" || duration === "") {
+    if(task === "" || duration === ""){
         alert("Lengkapi data terlebih dahulu!");
         return;
     }
@@ -62,19 +71,25 @@ function addTask() {
     document.getElementById("duration").value = "";
 }
 
-function displayTasks() {
+function displayTasks(){
+
     let list = document.getElementById("taskList");
     list.innerHTML = "";
 
-    tasks.forEach((t) => {
+    tasks.forEach((item)=>{
         list.innerHTML += `
-            <li>${t.name} - ${t.duration} menit</li>
+        <li>
+            <span>${item.name}</span>
+            <span>${item.duration} menit</span>
+        </li>
         `;
     });
+
 }
 
-function createSchedule() {
-    let sortedTasks = [...tasks].sort((a,b) => b.priority - a.priority);
+function createSchedule(){
+
+    let sorted = [...tasks].sort((a,b)=>b.priority-a.priority);
 
     let schedule = document.getElementById("schedule");
     schedule.innerHTML = "";
@@ -82,10 +97,10 @@ function createSchedule() {
     let hour = 7;
     let minute = 0;
 
-    sortedTasks.forEach((task) => {
+    sorted.forEach(task=>{
 
-        let startHour = hour;
-        let startMinute = minute;
+        let startH = hour;
+        let startM = minute;
 
         minute += task.duration;
 
@@ -94,16 +109,15 @@ function createSchedule() {
             minute -= 60;
         }
 
-        let endHour = hour;
-        let endMinute = minute;
+        let endH = hour;
+        let endM = minute;
 
         schedule.innerHTML += `
-            <div class="card">
-                <strong>${task.name}</strong><br>
-                ${String(startHour).padStart(2,"0")}:${String(startMinute).padStart(2,"0")}
-                -
-                ${String(endHour).padStart(2,"0")}:${String(endMinute).padStart(2,"0")}
-            </div>
+        <div class="card">
+            <h3>${task.name}</h3>
+            <p>🕒 ${String(startH).padStart(2,"0")}:${String(startM).padStart(2,"0")} -
+            ${String(endH).padStart(2,"0")}:${String(endM).padStart(2,"0")}</p>
+        </div>
         `;
 
         minute += 10;
@@ -114,6 +128,7 @@ function createSchedule() {
         }
     });
 }
+
 </script>
 
 </body>
