@@ -1,19 +1,31 @@
 /* Place your CSS styles in this file */
-<head>
-    <style>
-        .navbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 20px;
-        }
+.navbar {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+}
 
-        .logo img {
-            width: 10px;
-            height: auto;
-        }
-    </style>
-</head>
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand img {
+    width: 50px;      /* ubah 40px jika masih kebesaran */
+    height: 50px;
+    object-fit: contain;
+}
+
+.title h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.title p {
+    margin: 0;
+    font-size: 12px;
+}
 h1 {
     text-align: center;
     color:black;
