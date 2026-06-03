@@ -1,135 +1,18 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Planner</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+<div class="form-box">
 
-<div class="container">
+    <input type="text" id="task" placeholder="Masukkan nama tugas">
 
-    <h1>📚 Study Planner</h1>
-    <p class="subtitle">Atur tugas harianmu dengan lebih rapi</p>
+    <input type="number" id="duration" placeholder="Durasi (menit)">
 
-    <div class="form-box">
-        <input type="text" id="task" placeholder="Masukkan nama tugas">
+    <input type="time" id="startTime">
 
-        <input type="number" id="duration" placeholder="Durasi (menit)">
+    <select id="priority">
+        <option value="4">🔥 Penting & Mendesak</option>
+        <option value="3">⭐ Penting</option>
+        <option value="2">⏰ Mendesak</option>
+        <option value="1">📝 Biasa</option>
+    </select>
 
-        <select id="priority">
-            <option value="4">🔥 Penting & Mendesak</option>
-            <option value="3">⭐ Penting</option>
-            <option value="2">⏰ Mendesak</option>
-            <option value="1">📝 Biasa</option>
-        </select>
-
-        <button onclick="addTask()">Tambah Tugas</button>
-    </div>
-
-    <div class="section">
-        <h2>Daftar Tugas</h2>
-        <ul id="taskList"></ul>
-    </div>
-
-    <button class="schedule-btn" onclick="createSchedule()">
-        Buat Jadwal Otomatis
-    </button>
-
-    <div class="section">
-        <h2>Jadwal Hari Ini</h2>
-        <div id="schedule"></div>
-    </div>
+    <button onclick="addTask()">Tambah</button>
 
 </div>
-
-<script>
-
-let tasks = [];
-
-function addTask() {
-
-    const task = document.getElementById("task").value;
-    const duration = document.getElementById("duration").value;
-    const priority = document.getElementById("priority").value;
-
-    if(task === "" || duration === ""){
-        alert("Lengkapi data terlebih dahulu!");
-        return;
-    }
-
-    tasks.push({
-        name: task,
-        duration: parseInt(duration),
-        priority: parseInt(priority)
-    });
-
-    displayTasks();
-
-    document.getElementById("task").value = "";
-    document.getElementById("duration").value = "";
-}
-
-function displayTasks(){
-
-    let list = document.getElementById("taskList");
-    list.innerHTML = "";
-
-    tasks.forEach((item)=>{
-        list.innerHTML += `
-        <li>
-            <span>${item.name}</span>
-            <span>${item.duration} menit</span>
-        </li>
-        `;
-    });
-
-}
-
-function createSchedule(){
-
-    let sorted = [...tasks].sort((a,b)=>b.priority-a.priority);
-
-    let schedule = document.getElementById("schedule");
-    schedule.innerHTML = "";
-
-    let hour = 7;
-    let minute = 0;
-
-    sorted.forEach(task=>{
-
-        let startH = hour;
-        let startM = minute;
-
-        minute += task.duration;
-
-        while(minute >= 60){
-            hour++;
-            minute -= 60;
-        }
-
-        let endH = hour;
-        let endM = minute;
-
-        schedule.innerHTML += `
-        <div class="card">
-            <h3>${task.name}</h3>
-            <p>🕒 ${String(startH).padStart(2,"0")}:${String(startM).padStart(2,"0")} -
-            ${String(endH).padStart(2,"0")}:${String(endM).padStart(2,"0")}</p>
-        </div>
-        `;
-
-        minute += 10;
-
-        while(minute >= 60){
-            hour++;
-            minute -= 60;
-        }
-    });
-}
-
-</script>
-
-</body>
-</html>
