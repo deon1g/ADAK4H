@@ -1,5 +1,19 @@
 /* Place your CSS styles in this file */
+<head>
+    <style>
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+        }
 
+        .logo1.png {
+            width: 60px;
+            height: auto;
+        }
+    </style>
+</head>
 h1 {
     text-align: center;
     color:black;
