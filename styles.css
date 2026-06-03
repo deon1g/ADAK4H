@@ -1,26 +1,107 @@
-function displayTasks(){
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Segoe UI, sans-serif;
+}
 
-    let list = document.getElementById("taskList");
-    list.innerHTML = "";
+body{
+    background:#041237;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    padding:30px;
+}
 
-    tasks.forEach((item,index)=>{
+.container{
+    width:900px;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
 
-        list.innerHTML += `
-        <li>
+h1{
+    text-align:center;
+    color:#041237;
+}
 
-            <div>
-                <strong>${item.name}</strong><br>
-                ${item.duration} menit |
-                Mulai ${item.startTime}
-            </div>
+.subtitle{
+    text-align:center;
+    color:gray;
+    margin-bottom:25px;
+}
 
-            <button onclick="deleteTask(${index})" class="delete-btn">
-                Hapus
-            </button>
+.form-box{
+    display:grid;
+    grid-template-columns:
+    2fr
+    1fr
+    1fr
+    1.5fr
+    1fr;
+    gap:10px;
+}
 
-        </li>
-        `;
+input,
+select{
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:10px;
+}
 
-    });
+button{
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    color:white;
+    font-weight:bold;
+    background:#0b57d0;
+}
 
+button:hover{
+    opacity:0.9;
+}
+
+h2{
+    margin-top:25px;
+    margin-bottom:10px;
+    color:#041237;
+}
+
+ul{
+    list-style:none;
+}
+
+li{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#f4f6ff;
+    margin-bottom:10px;
+    padding:12px;
+    border-radius:10px;
+}
+
+.delete-btn{
+    background:#e53935;
+    padding:8px 12px;
+}
+
+.schedule-btn{
+    width:100%;
+    padding:14px;
+    margin-top:15px;
+}
+
+.card{
+    background:#041237;
+    color:white;
+    padding:15px;
+    border-radius:15px;
+    margin-top:10px;
+}
+
+.card h3{
+    margin-bottom:5px;
 }
