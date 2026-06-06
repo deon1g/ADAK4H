@@ -36,6 +36,15 @@ body{
 .logo{
     font-size:1.3rem;
     font-weight:600;
+
+    }
+
+.brand img {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    margin-top: -20px;
+}
 }
 
 .nav-links{
