@@ -16,7 +16,6 @@ body{
     color:white;
 }
 
-/* Navbar */
 
 .navbar{
     width:100%;
@@ -56,8 +55,6 @@ body{
     color:#6d8fff;
 }
 
-/* Hero */
-
 .hero{
     min-height:70vh;
 
@@ -81,7 +78,6 @@ body{
     color:#b8c6ff;
 }
 
-/* Deskripsi */
 
 .info-card{
     max-width:1200px;
@@ -113,7 +109,6 @@ body{
     text-align:center;
 }
 
-/* Form */
 
 #scheduler{
     max-width:1200px;
@@ -155,7 +150,6 @@ body{
     font-weight:600;
 }
 
-/* Cards */
 
 .content{
     display:grid;
@@ -206,7 +200,7 @@ li{
     cursor:pointer;
 }
 
-/* Responsive */
+
 
 @media(max-width:900px){
 
