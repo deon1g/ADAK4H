@@ -19,13 +19,21 @@ body{
 /* NAVBAR */
 
 .navbar{
-    background:white;
+   position:sticky;
+    top:0;
+    z-index:1000;
 
     display:flex;
     justify-content:space-between;
     align-items:center;
 
     padding:15px 7%;
+
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(15px);
+    -webkit-backdrop-filter:blur(15px);
+
+    border-bottom:1px solid rgba(255,255,255,0.1);
 }
 
 .brand{
@@ -52,7 +60,7 @@ body{
 
 .menu a{
     text-decoration:none;
-    color:#222;
+    color:white;
     padding:10px 18px;
     border-radius:12px;
 }
