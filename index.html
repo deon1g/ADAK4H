@@ -3,106 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Scheduler</title>
+    <title>Smart To-Do Scheduler</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  
+    <!-- Navbar -->
     <nav class="navbar">
-
-        <div class="brand">
-            <img src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png" alt="Logo">
-            <h2>Smart Scheduler</h2>
+        <div class="logo">
+            💡 Smart Scheduler
         </div>
 
-        <ul class="menu">
-            <li><a href="index.html" class="active">Produk</a></li>
+        <ul class="nav-links">
             <li><a href="https://alekxrobot.github.io/ADAK4H/">Home</a></li>
             <li><a href="design.html">Design</a></li>
+            <li><a href="index.html">Produk</a></li>
         </ul>
-
     </nav>
 
- 
+    <!-- Home -->
     <section id="home" class="hero">
+        <h1>Smart To-Do Scheduler</h1>
+        <p>
+            Atur tugas harianmu dengan lebih efektif menggunakan sistem prioritas dan jadwal otomatis.
+        </p>
+    </section>
 
-        <h1>Atur Waktumu Lebih Efisien</h1>
+    <!-- Deskripsi -->
+    <section id="deskripsi" class="info-card">
+        <h2>📖 Deskripsi Produk</h2>
 
         <p>
-            Smart Scheduler membantu siswa mengelola tugas
-            berdasarkan prioritas dan durasi pengerjaan.
+            Smart To-Do Scheduler adalah aplikasi sederhana yang membantu siswa
+            mengatur tugas harian berdasarkan tingkat urgensi dan durasi pengerjaan.
         </p>
 
-        <a href="#scheduler" class="hero-btn">
-            Mulai Sekarang
-        </a>
-
-    </section>
-
-   
-    <section id="tentang" class="section">
-
-        <h2>Tentang Produk</h2>
-
-        <div class="feature-container">
-
-            <div class="feature-card">
-                <h3>📋 To-Do List</h3>
-                <p>
-                    Menambahkan daftar tugas harian dengan mudah.
-                </p>
+        <div class="features">
+            <div class="feature-box">
+                ⏰ Jadwal Otomatis
             </div>
 
-            <div class="feature-card">
-                <h3>🔥 Prioritas</h3>
-                <p>
-                    Mengurutkan tugas berdasarkan tingkat urgensi.
-                </p>
+            <div class="feature-box">
+                🔥 Prioritas Tugas
             </div>
 
-            <div class="feature-card">
-                <h3>⏰ Jadwal Otomatis</h3>
-                <p>
-                    Menyusun jadwal dengan waktu istirahat.
-                </p>
+            <div class="feature-box">
+                📋 To-Do List
             </div>
-
         </div>
-
     </section>
 
-   
-    <section id="scheduler" class="section">
-
-        <h2>Scheduler</h2>
+    <!-- Scheduler -->
+    <section id="scheduler">
 
         <div class="form-box">
 
-            <input type="text" id="task" placeholder="Nama Tugas">
+            <input type="text"
+                id="taskName"
+                placeholder="Nama Tugas">
 
-            <input type="number" id="duration" placeholder="Durasi (menit)">
+            <input type="number"
+                id="duration"
+                placeholder="Durasi (menit)">
+
+            <input type="time"
+                id="startTime">
 
             <select id="priority">
-                <option value="1">Penting & Mendesak</option>
-                <option value="2">Penting & Tidak Mendesak</option>
-                <option value="3">Tidak Penting & Mendesak</option>
-                <option value="4">Tidak Penting & Tidak Mendesak</option>
+                <option value="1">🔥 Penting & Mendesak</option>
+                <option value="2">⭐ Penting & Tidak Mendesak</option>
+                <option value="3">⚡ Tidak Penting & Mendesak</option>
+                <option value="4">📝 Tidak Penting & Tidak Mendesak</option>
             </select>
 
-            <button onclick="addTask()">Tambah</button>
+            <button onclick="addTask()">
+                Tambah Tugas
+            </button>
 
         </div>
 
         <div class="content">
 
             <div class="card">
-                <h3>Daftar Tugas</h3>
+                <h2>📋 Daftar Tugas</h2>
                 <ul id="taskList"></ul>
             </div>
 
             <div class="card">
-                <h3>Jadwal</h3>
+                <h2>⏰ Jadwal Otomatis</h2>
                 <ul id="scheduleList"></ul>
             </div>
 
@@ -112,74 +100,118 @@
 
 <script>
 
-let tasks=[];
+let tasks = [];
 
 function addTask(){
 
-    const task=
-    document.getElementById("task").value;
+    const taskName =
+    document.getElementById("taskName").value;
 
-    const duration=
+    const duration =
     document.getElementById("duration").value;
 
-    const priority=
+    const startTime =
+    document.getElementById("startTime").value;
+
+    const priority =
     document.getElementById("priority").value;
 
-    if(!task || !duration){
-        alert("Lengkapi data!");
+    if(!taskName || !duration || !startTime){
+        alert("Lengkapi semua data!");
         return;
     }
 
     tasks.push({
-        task,
-        duration,
-        priority
+        taskName,
+        duration: parseInt(duration),
+        startTime,
+        priority: parseInt(priority)
     });
 
+    document.getElementById("taskName").value="";
+    document.getElementById("duration").value="";
+
     renderTasks();
+    generateSchedule();
 }
 
 function renderTasks(){
 
-    const taskList=
+    const taskList =
     document.getElementById("taskList");
 
-    const scheduleList=
-    document.getElementById("scheduleList");
-
     taskList.innerHTML="";
-    scheduleList.innerHTML="";
 
-    const sorted=
-    [...tasks].sort(
-        (a,b)=>a.priority-b.priority
-    );
-
-    sorted.forEach((item,index)=>{
+    tasks.forEach((task,index)=>{
 
         taskList.innerHTML += `
         <li>
-        ${item.task}
-        <button onclick="removeTask(${index})">
-        Hapus
-        </button>
-        </li>
-        `;
+            <div>
+                <strong>${task.taskName}</strong><br>
+                ${task.duration} menit
+            </div>
 
-        scheduleList.innerHTML += `
-        <li>
-        ${item.task} (${item.duration} menit)
+            <button
+            class="delete-btn"
+            onclick="deleteTask(${index})">
+            Hapus
+            </button>
         </li>
         `;
     });
 }
 
-function removeTask(index){
+function deleteTask(index){
 
     tasks.splice(index,1);
 
     renderTasks();
+    generateSchedule();
+}
 
+function generateSchedule(){
+
+    const scheduleList =
+    document.getElementById("scheduleList");
+
+    scheduleList.innerHTML="";
+
+    const sorted =
+    [...tasks].sort(
+        (a,b)=>a.priority-b.priority
+    );
+
+    sorted.forEach(task=>{
+
+        let [hour,minute] =
+        task.startTime.split(":").map(Number);
+
+        let start =
+        hour*60 + minute;
+
+        let finish =
+        start + task.duration;
+
+        let endHour =
+        Math.floor(finish/60);
+
+        let endMinute =
+        finish%60;
+
+        scheduleList.innerHTML += `
+        <li>
+            <div>
+                <strong>${task.taskName}</strong><br>
+                ${task.startTime}
+                -
+                ${String(endHour).padStart(2,"0")}:
+                ${String(endMinute).padStart(2,"0")}
+                <br>
+                Istirahat 10 menit
+            </div>
+        </li>
+        `;
+    });
 }
 
 </script>
