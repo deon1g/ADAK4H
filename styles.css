@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
-*{
+{
     margin:0;
     padding:0;
     box-sizing:border-box;
@@ -16,7 +16,7 @@ body{
     color:white;
 }
 
-/* NAVBAR */
+
 
 .navbar{
    position:sticky;
@@ -70,7 +70,7 @@ body{
     color:white;
 }
 
-/* HERO */
+
 
 .hero{
     text-align:center;
@@ -102,7 +102,7 @@ body{
     border-radius:15px;
 }
 
-/* SECTION */
+
 
 .section{
     padding:80px 7%;
@@ -113,7 +113,7 @@ body{
     margin-bottom:40px;
 }
 
-/* FITUR */
+
 
 .feature-container{
     display:grid;
@@ -129,7 +129,7 @@ body{
     border-radius:20px;
 }
 
-/* FORM */
+
 
 .form-box{
     display:grid;
@@ -156,7 +156,7 @@ body{
     cursor:pointer;
 }
 
-/* CONTENT */
+
 
 .content{
     display:grid;
@@ -193,7 +193,7 @@ body{
     border-radius:8px;
 }
 
-/* RESPONSIVE */
+
 
 @media(max-width:768px){
 
